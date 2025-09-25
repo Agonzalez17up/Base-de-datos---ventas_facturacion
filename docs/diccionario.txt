@@ -1,0 +1,182 @@
+# Diccionario de Datos - Sistema de Ventas TechParts
+
+---
+
+### clientes
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_cliente      | INT          | Identificador único del cliente                  | 11 dígitos             | PK    |
+| nombre          | VARCHAR(100) | Nombre del cliente                               | 100                    |       |
+| apellido        | VARCHAR(100) | Apellido del cliente                             | 100                    |       |
+| identificacion  | VARCHAR(50)  | Cédula o identificación panameña                 | 50                     |       |
+| sexo            | VARCHAR(20)  | Sexo del cliente                                 | 20                     |       |
+| pais            | VARCHAR(50)  | País de residencia                               | 50                     |       |
+| estado          | VARCHAR(50)  | Provincia/Estado                                 | 50                     |       |
+| ciudad          | VARCHAR(50)  | Ciudad                                           | 50                     |       |
+| sector          | VARCHAR(50)  | Sector/Barrio                                    | 50                     |       |
+| correo          | VARCHAR(100) | Correo electrónico                               | 100                    |       |
+| telefono        | VARCHAR(20)  | Teléfono de contacto                             | 20                     |       |
+| direccion       | VARCHAR(255) | Dirección física                                 | 255                    |       |
+| fecha_registro  | DATETIME     | Fecha de registro en el sistema                  | -                      |       |
+
+---
+
+### categorias
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_categoria    | INT          | Identificador único de la categoría              | 11 dígitos             | PK    |
+| nombre          | VARCHAR(50)  | Nombre de la categoría de producto               | 50                     |       |
+
+---
+
+### proveedores
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_proveedor    | INT          | Identificador único del proveedor                | 11 dígitos             | PK    |
+| nombre          | VARCHAR(100) | Nombre del proveedor                             | 100                    |       |
+| contacto        | VARCHAR(100) | Persona de contacto                              | 100                    |       |
+| telefono        | VARCHAR(20)  | Teléfono del proveedor                           | 20                     |       |
+| direccion       | VARCHAR(255) | Dirección del proveedor                          | 255                    |       |
+
+---
+
+### productos
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_producto     | INT          | Identificador único del producto                 | 11 dígitos             | PK    |
+| nombre          | VARCHAR(50)  | Nombre del producto                              | 50                     |       |
+| descripcion     | VARCHAR(255) | Descripción detallada del producto               | 255                    |       |
+| precio          | DECIMAL(18,2)| Precio actual del producto                       | 18 dígitos, 2 decimales|       |
+| stock           | INT          | Cantidad disponible en inventario                | 11 dígitos             |       |
+| id_categoria    | INT          | Categoría a la que pertenece el producto         | 11 dígitos             | FK    |
+| codigo_barras   | VARCHAR(50)  | Código de barras del producto                    | 50                     |       |
+| sku             | VARCHAR(50)  | Código único del producto                        | 50                     |       |
+| id_proveedor    | INT          | Proveedor principal del producto                 | 11 dígitos             | FK    |
+
+---
+
+### historial_precios
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_historial    | INT          | Identificador único del historial de precios     | 11 dígitos             | PK    |
+| id_producto     | INT          | Producto relacionado                             | 11 dígitos             | FK    |
+| precio          | DECIMAL(18,2)| Precio registrado                                | 18 dígitos, 2 decimales|       |
+| fecha_inicio    | DATETIME     | Fecha de inicio de vigencia del precio           | -                      |       |
+| fecha_fin       | DATETIME     | Fecha de fin de vigencia del precio (NULL si vigente) | -                 |       |
+
+---
+
+### metodos_pago
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_metodo       | INT          | Identificador único del método de pago           | 11 dígitos             | PK    |
+| nombre          | VARCHAR(50)  | Nombre del método de pago                        | 50                     |       |
+
+---
+
+### sucursal
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_sucursal     | INT          | Identificador único de la sucursal               | 11 dígitos             | PK    |
+| nombre          | VARCHAR(100) | Nombre de la sucursal                            | 100                    |       |
+| direccion       | VARCHAR(255) | Dirección física                                 | 255                    |       |
+| ciudad          | VARCHAR(50)  | Ciudad                                           | 50                     |       |
+| estado          | VARCHAR(50)  | Provincia/Estado                                 | 50                     |       |
+| pais            | VARCHAR(50)  | País                                             | 50                     |       |
+
+---
+
+### departamento
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_departamento | INT          | Identificador único del departamento             | 11 dígitos             | PK    |
+| nombre          | VARCHAR(100) | Nombre del departamento                          | 100                    |       |
+| descripcion     | VARCHAR(255) | Descripción del departamento                     | 255                    |       |
+| id_sucursal     | INT          | Sucursal a la que pertenece                      | 11 dígitos             | FK    |
+
+---
+
+### personal
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_personal     | INT          | Identificador único del empleado                 | 11 dígitos             | PK    |
+| nombre          | VARCHAR(100) | Nombre del empleado                              | 100                    |       |
+| apellido        | VARCHAR(100) | Apellido del empleado                            | 100                    |       |
+| cargo           | VARCHAR(50)  | Cargo o puesto                                   | 50                     |       |
+| correo          | VARCHAR(100) | Correo electrónico                               | 100                    |       |
+| telefono        | VARCHAR(20)  | Teléfono                                         | 20                     |       |
+| id_departamento | INT          | Departamento al que pertenece                    | 11 dígitos             | FK    |
+
+---
+
+### ventas
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_venta        | INT          | Identificador único de la venta                  | 11 dígitos             | PK    |
+| id_cliente      | INT          | Cliente que realiza la compra                    | 11 dígitos             | FK    |
+| fecha_venta     | DATETIME     | Fecha de la venta                                | -                      |       |
+| total           | DECIMAL(10,2)| Monto total de la venta                          | 10 dígitos, 2 decimales|       |
+| id_sucursal     | INT          | Sucursal donde se realiza la venta               | 11 dígitos             | FK    |
+| id_personal     | INT          | Empleado que realiza la venta                    | 11 dígitos             | FK    |
+| estado_venta    | VARCHAR(20)  | Estado de la venta                               | 20                     |       |
+
+---
+
+### facturacion
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_factura      | INT          | Identificador único de la factura                | 11 dígitos             | PK    |
+| id_venta        | INT          | Venta asociada                                   | 11 dígitos             | FK    |
+| fecha_factura   | DATETIME     | Fecha de emisión de la factura                   | -                      |       |
+| metodo_pago     | VARCHAR(50)  | Método de pago utilizado                         | 50                     |       |
+| id_metodo       | INT          | Identificador del método de pago                 | 11 dígitos             | FK    |
+| estado_factura  | VARCHAR(20)  | Estado de la factura                             | 20                     |       |
+
+---
+
+### detalle_venta
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_detalle      | INT          | Identificador único del detalle de venta         | 11 dígitos             | PK    |
+| id_venta        | INT          | Venta asociada                                   | 11 dígitos             | FK    |
+| id_producto     | INT          | Producto vendido                                 | 11 dígitos             | FK    |
+| cantidad        | INT          | Cantidad vendida                                 | 11 dígitos             |       |
+| precio_unitario | DECIMAL(10,2)| Precio unitario del producto                     | 10 dígitos, 2 decimales|       |
+| subtotal        | DECIMAL(10,2)| Subtotal por producto                            | 10 dígitos, 2 decimales|       |
+| descuento       | DECIMAL(10,2)| Descuento aplicado                               | 10 dígitos, 2 decimales|       |
+
+---
+
+### inventario
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_inventario   | INT          | Identificador único del registro de inventario   | 11 dígitos             | PK    |
+| id_producto     | INT          | Producto en inventario                           | 11 dígitos             | FK    |
+| cantidad        | INT          | Cantidad disponible                              | 11 dígitos             |       |
+| ubicacion       | VARCHAR(100) | Ubicación física en la sucursal                  | 100                    |       |
+| fecha_ingreso   | DATETIME     | Fecha de ingreso al inventario                   | -                      |       |
+| id_sucursal     | INT          | Sucursal donde está el inventario                | 11 dígitos             | FK    |
+
+---
+
+### movimientos_inventario
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_movimiento   | INT          | Identificador único del movimiento               | 11 dígitos             | PK    |
+| id_producto     | INT          | Producto movido                                  | 11 dígitos             | FK    |
+| tipo_movimiento | ENUM         | Tipo de movimiento: entrada/salida               | 8                      |       |
+| cantidad        | INT          | Cantidad movida                                  | 11 dígitos             |       |
+| fecha           | DATETIME     | Fecha del movimiento                             | -                      |       |
+| referencia      | VARCHAR(100) | Motivo o referencia del movimiento               | 100                    |       |
+| id_sucursal     | INT          | Sucursal donde ocurre el movimiento              | 11 dígitos             | FK    |
+
+---
+
+### titulos_y_otros_gasto
+| Campo           | Tipo         | Descripción                                      | Máx. caracteres/dígitos | PK/FK |
+|-----------------|--------------|--------------------------------------------------|------------------------|-------|
+| id_gasto        | INT          | Identificador único del gasto                    | 11 dígitos             | PK    |
+| descripcion     | VARCHAR(255) | Descripción del gasto                            | 255                    |       |
+| monto           | DECIMAL(10,2)| Monto del gasto                                  | 10 dígitos, 2 decimales|       |
+| fecha           | DATETIME     | Fecha del gasto                                  | -                      |       |
+| id_sucursal     | INT          | Sucursal asociada al gasto                       | 11 dígitos             | FK    |

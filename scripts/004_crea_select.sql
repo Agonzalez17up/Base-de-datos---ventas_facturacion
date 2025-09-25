@@ -1,26 +1,42 @@
--- Reporte de clientes y cantidad de ventas realizadas
-SELECT c.id_cliente, c.nombre, c.apellido, COUNT(v.id_venta) AS cantidad_ventas
-FROM clientes c
-LEFT JOIN ventas v ON c.id_cliente = v.id_cliente
-GROUP BY c.id_cliente, c.nombre, c.apellido;
+-- Total de ventas realizadas
+SELECT SUM(total) AS total_ventas
+FROM ventas;
 
--- Reporte de productos vendidos y cantidad total vendida
-SELECT p.id_producto, p.nombre, SUM(dv.cantidad) AS total_vendido
-FROM productos p
-JOIN detalle_venta dv ON p.id_producto = dv.id_producto
-GROUP BY p.id_producto, p.nombre;
-
--- Reporte de ventas con detalle de productos y cliente
-SELECT v.id_venta, v.fecha_venta, c.nombre AS cliente, p.nombre AS producto, dv.cantidad, dv.precio_unitario, dv.subtotal
+-- Ventas por sucursal
+SELECT s.nombre AS sucursal, SUM(v.total) AS ventas_sucursal
 FROM ventas v
-JOIN clientes c ON v.id_cliente = c.id_cliente
-JOIN detalle_venta dv ON v.id_venta = dv.id_venta
-JOIN productos p ON dv.id_producto = p.id_producto
-ORDER BY v.fecha_venta DESC;
+JOIN sucursal s ON v.id_sucursal = s.id_sucursal
+GROUP BY s.nombre;
 
+-- Inventario total por producto
+SELECT p.nombre AS producto, SUM(i.cantidad) AS inventario_total
+FROM inventario i
+JOIN productos p ON i.id_producto = p.id_producto
+GROUP BY p.nombre;
 
--- Reporte de facturación por estado
-SELECT estado_factura, COUNT(*) AS cantidad, SUM(fv.total) AS monto_total
+-- Inventario total por sucursal
+SELECT s.nombre AS sucursal, SUM(i.cantidad) AS inventario_total
+FROM inventario i
+JOIN sucursal s ON i.id_sucursal = s.id_sucursal
+GROUP BY s.nombre;
+
+-- Ventas por método de pago
+SELECT mp.nombre AS metodo_pago, COUNT(f.id_factura) AS cantidad_ventas, SUM(v.total) AS total_ventas
 FROM facturacion f
-JOIN ventas fv ON f.id_venta = fv.id_venta
-GROUP BY estado_factura;
+JOIN metodos_pago mp ON f.id_metodo = mp.id_metodo
+JOIN ventas v ON f.id_venta = v.id_venta
+GROUP BY mp.nombre;
+
+-- Productos más vendidos
+SELECT p.nombre AS producto, SUM(dv.cantidad) AS cantidad_vendida
+FROM detalle_venta dv
+JOIN productos p ON dv.id_producto = p.id_producto
+GROUP BY p.nombre
+ORDER BY cantidad_vendida DESC
+LIMIT 5;
+
+-- Gastos totales por sucursal
+SELECT s.nombre AS sucursal, SUM(t.monto) AS total_gastos
+FROM titulos_y_otros_gasto t
+JOIN sucursal s ON t.id_sucursal = s.id_sucursal
+GROUP BY s.nombre;
